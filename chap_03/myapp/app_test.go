@@ -79,3 +79,20 @@ func TestFooHandler(t *testing.T) {
 		}
 	})
 }
+
+func TestFooHandler_WithOutJSON(t *testing.T) {
+	t.Run("FooHandlier Test(WithOut JSON)", func(t *testing.T) {
+		//given
+		assert := assert.New(t)
+		mux := NewHandler()
+
+		res := httptest.NewRecorder()
+		req := httptest.NewRequest("GET", "/foo", nil)
+
+		//when
+		mux.ServeHTTP(res, req)
+
+		//then
+		assert.Equal(http.StatusBadRequest, res.Code)
+	})
+}
