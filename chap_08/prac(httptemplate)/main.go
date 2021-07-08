@@ -38,6 +38,7 @@ func main() {
 
 	log.Println(buffer.String())
 
+	// template에서 반복문을 사용할 때는 range를 이용
 	temp2, err := template.New("prac range").
 		Parse(`
 		{{range . -}}
@@ -62,4 +63,15 @@ func main() {
 	var buffer2 bytes.Buffer
 	temp2.Execute(&buffer2, users)
 	log.Println(buffer2.String())
+
+	//template을 가져올 때는 parseFeils에 파일경로를 넣어준다.
+	temp3, err := template.New("prac template file").ParseFiles("templates/temp1.tmpl")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var buffer3 bytes.Buffer
+	//가져온 template를 excute를 할 때는 Excute가 아닌 ExcuteTemplate
+	temp3.ExecuteTemplate(&buffer3, "temp1.tmpl", newUser)
+	log.Println(buffer3.String())
 }
